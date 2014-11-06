@@ -18,12 +18,12 @@
     <ClCompile Include="PerformanceTest.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="subsystems\StreamLatencyMeasurement.cpp">
+    <ClCompile Include="StreamLatencyMeasurement.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="subsystems\StreamLatencyMeasurement.h">
+    <ClInclude Include="StreamLatencyMeasurement.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

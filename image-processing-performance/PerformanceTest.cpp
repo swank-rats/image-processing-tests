@@ -10,26 +10,30 @@
 #include <Poco\Thread.h>
 #include <Poco\Task.h>
 #include <Poco\TaskManager.h>
+#include <Poco\Exception.h>
 
-#include "subsystems\StreamLatencyMeasurement.h"
+#include "StreamLatencyMeasurement.h"
 
+using std::cerr;
+using Poco::URI;
+using Poco::TaskManager;
+using Poco::Thread;
+using Poco::Exception;
 
 int main(int argc, const char* argv[])
 {
 	try {
-		Poco::TaskManager tm;
+		TaskManager tm;
 
-		StreamLatencyMeasurement* slm = new StreamLatencyMeasurement(Poco::URI("http://127.0.0.1:4711/videostream"));
+		StreamLatencyMeasurement* slm = new StreamLatencyMeasurement(URI("http://127.0.0.1:4711/videostream"));
 		tm.start(slm);
 
-		Poco::Thread::sleep(10000);
+		Thread::sleep(10000);
 
 		tm.joinAll();
 	}
-	catch (Poco::SyntaxException& e) {
-		std::cerr << "Exception: " << e.what() << std::endl;
-		std::cerr << "Message: " << e.message() << std::endl;
-		std::cerr << e.displayText() << std::endl;
+	catch (Exception& e) {
+		cerr << e.displayText() << std::endl;
 	}
 
 	return 0;
