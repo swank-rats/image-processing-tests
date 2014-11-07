@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 #include <Poco\Stopwatch.h>
 #include <Poco\Stopwatch.h>
@@ -34,8 +35,10 @@ void StreamLatencyMeasurement::runTask()
 		SendFrame(request);
 
 		Stopwatch sw;
+		double timeBetween;
 
 		while (!isCancelled()) {
+			sw.restart();
 			int size = FindLength();
 			if (size == -1) {
 				cerr << endl << "could not find length" << endl;
@@ -45,12 +48,12 @@ void StreamLatencyMeasurement::runTask()
 			MoveToStreamStart();
 
 			char* buff = new char[size];
-			
+			sw.stop();
+			timeBetween = sw.elapsed() * 0.001;
 			sw.start();
 			GetBytes(buff, size);
 			sw.stop();
-			cout << "latency (ms): " << sw.elapsed() * 0.001 << "\r";
-			sw.reset();
+			cout << "transport of " << size << " bytes: " << std::setw(8) << sw.elapsed() * 0.001 << " ms; time between: " << std::setw(7) << timeBetween << " ms\r";
 		}
 	}
 	catch (Exception& e) {
