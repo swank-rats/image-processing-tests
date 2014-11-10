@@ -11,10 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BBCC2D51-A096-4962-BF40-854582D31CEE}</ProjectGuid>
+    <ProjectGuid>{CD919B87-C3E5-4C43-875C-FDF9FB1EB655}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>imageprocessingperformance</RootNamespace>
-    <ProjectName>MJPEGPerformance</ProjectName>
+    <RootNamespace>WebSocketTest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,8 +41,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <ReferencePath>$(ReferencePath)</ReferencePath>
-    <IncludePath>$(POCO)\Util\include;$(POCO)\Foundation\include;$(POCO)\Net\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -59,8 +56,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(POCO)\lib;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>PocoFoundationd.lib;PocoUtild.lib;PocoNetd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -81,11 +76,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="StreamLatencyMeasurement.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="StreamLatencyMeasurement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
