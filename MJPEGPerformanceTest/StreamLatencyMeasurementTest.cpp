@@ -5,7 +5,7 @@
 #include <Poco\Stopwatch.h>
 
 
-#include "StreamLatencyMeasurement.h"
+#include "StreamLatencyMeasurementTest.h"
 
 using std::cerr;
 using std::cout;
@@ -19,12 +19,12 @@ string length = "Length";
 string jpeg = "jpeg\r\n";
 string lineend = "\r\n";
 
-StreamLatencyMeasurement::StreamLatencyMeasurement(URI uri)
-	: uri(uri), Task("StreamLatencyMeasurement"), socketAddr(uri.getHost(), uri.getPort()), socket(), stream(socket)
+StreamLatencyMeasurementTest::StreamLatencyMeasurementTest(URI uri)
+	: uri(uri), Task("StreamLatencyMeasurementTest"), socketAddr(uri.getHost(), uri.getPort()), socket(), stream(socket)
 {
 }
 
-void StreamLatencyMeasurement::runTask()
+void StreamLatencyMeasurementTest::runTask()
 {
 
 	try {
@@ -64,7 +64,7 @@ void StreamLatencyMeasurement::runTask()
 	}
 }
 
-void StreamLatencyMeasurement::MoveToStreamStart() {
+void StreamLatencyMeasurementTest::MoveToStreamStart() {
 	while (1) {
 		string response;
 
@@ -77,7 +77,7 @@ void StreamLatencyMeasurement::MoveToStreamStart() {
 	}
 }
 
-int StreamLatencyMeasurement::FindLength() {
+int StreamLatencyMeasurementTest::FindLength() {
 	bool foundLength = false;
 	int size = -1;
 
@@ -99,7 +99,7 @@ int StreamLatencyMeasurement::FindLength() {
 	return size;
 }
 
-bool StreamLatencyMeasurement::GetBytes(char bytes[], int bytesToRead) {
+bool StreamLatencyMeasurementTest::GetBytes(char bytes[], int bytesToRead) {
 	int tmp = 0;
 	try {
 		while (bytesToRead > tmp) {
@@ -114,7 +114,7 @@ bool StreamLatencyMeasurement::GetBytes(char bytes[], int bytesToRead) {
 }
 
 
-bool StreamLatencyMeasurement::GetFrame(std::string& frame, char delimiter) {
+bool StreamLatencyMeasurementTest::GetFrame(std::string& frame, char delimiter) {
 	char c;
 	try {
 		do {
@@ -129,7 +129,7 @@ bool StreamLatencyMeasurement::GetFrame(std::string& frame, char delimiter) {
 	return true;
 }
 
-bool StreamLatencyMeasurement::SendFrame(const std::string& frame) {
+bool StreamLatencyMeasurementTest::SendFrame(const std::string& frame) {
 	int tmp = 0;
 	int bytesToWrite = frame.length();
 	const char* bytes = frame.c_str();

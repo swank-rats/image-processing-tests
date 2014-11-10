@@ -80,10 +80,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="StreamLatencyMeasurement.cpp" />
+    <ClCompile Include="StreamLatencyMeasurementTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="StreamLatencyMeasurement.h" />
+    <ClInclude Include="StreamLatencyMeasurementTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

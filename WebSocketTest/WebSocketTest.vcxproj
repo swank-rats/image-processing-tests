@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(POCO)\Foundation\include;$(POCO)\Net\include;$(POCO)\Util\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(POCO)\Foundation\include;$(POCO)\Crypto\include;$(POCO)\NetSSL_OpenSSL\include;$(POCO)\Net\include;$(POCO)\XML\include;$(POCO)\Util\include;$(POCO)\JSON\include;$(OPENSSL)\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -57,9 +57,13 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>PocoFoundationd.lib;PocoNetd.lib;PocoUtild.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(POCO)\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PocoCryptod.lib;PocoFoundationd.lib;PocoNetd.lib;PocoNetSSLd.lib;PocoUtild.lib;PocoXMLd.lib;PocoJSONd.lib;libeay32MDd.lib;ssleay32MDd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(POCO)\lib;$(OPENSSL)\lib\VC;</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy *.pem $(TargetDir) /y
+xcopy *.properties $(TargetDir) /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -80,6 +84,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RequestHandlerFactory.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="any.pem" />
+    <None Include="rootcert.pem" />
+    <None Include="WebSocketTest.properties">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

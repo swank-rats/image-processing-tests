@@ -1,8 +1,8 @@
 //============================================================================
-// Name        : PerformanceTest.cpp
+// Name        : main.cpp
 // Author      : ITM13
 // Version     : 1.0
-// Description : Image process server performance testing tool entry point
+// Description : MJPEG performance test
 //============================================================================
 #include <iostream>
 
@@ -11,31 +11,64 @@
 #include <Poco\Task.h>
 #include <Poco\TaskManager.h>
 #include <Poco\Exception.h>
+#include <Poco\Util\ServerApplication.h>
+#include <Poco\Util\OptionSet.h>
 
-#include "StreamLatencyMeasurement.h"
+#include "StreamLatencyMeasurementTest.h"
 
 using std::cerr;
 using Poco::URI;
 using Poco::TaskManager;
 using Poco::Thread;
 using Poco::Exception;
+using Poco::Util::ServerApplication;
+using Poco::Util::OptionSet;
 
-int main(int argc, const char* argv[])
-{
-	try {
+class MJPEGPerformance : public ServerApplication {
+public:
+	MJPEGPerformance()
+	{
+	}
+protected:
+	void initialize(Application& self)
+	{
+		ServerApplication::initialize(self);
+	}
+
+	void uninitialize()
+	{
+		ServerApplication::uninitialize();
+	}
+
+	void defineOptions(OptionSet& options)
+	{
+		ServerApplication::defineOptions(options);
+	}
+
+	void handleOption(const std::string& name, const std::string& value)
+	{
+		ServerApplication::handleOption(name, value);
+	}
+
+	int main(const std::vector<std::string>& args)
+	{
 		TaskManager tm;
 
-		StreamLatencyMeasurement* slm = new StreamLatencyMeasurement(URI("http://127.0.0.1:4711/videostream"));
-		tm.start(slm);
+		try {
 
-		Thread::sleep(10000);
+			StreamLatencyMeasurementTest* slm = new StreamLatencyMeasurementTest(URI("http://127.0.0.1:4711/videostream"));
+			tm.start(slm);
+		}
+		catch (Exception& e) {
+			cerr << e.displayText() << std::endl;
+		}
 
+		waitForTerminationRequest();
+		tm.cancelAll();
 		tm.joinAll();
-	}
-	catch (Exception& e) {
-		cerr << e.displayText() << std::endl;
-	}
 
-	return 0;
-}
+		return Application::EXIT_OK;
+	}
+};
 
+POCO_SERVER_MAIN(MJPEGPerformance)

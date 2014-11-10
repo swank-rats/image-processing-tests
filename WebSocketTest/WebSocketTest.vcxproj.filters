@@ -19,4 +19,14 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RequestHandlerFactory.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="WebSocketTest.properties" />
+    <None Include="rootcert.pem" />
+    <None Include="any.pem" />
+  </ItemGroup>
 </Project>
