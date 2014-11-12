@@ -3,7 +3,7 @@ Image processing tests
 
 Installation and project setup
 -------------------
-To get this project running you need [Poco C++ Libraries 1.4.7](http://pocoproject.org/) and [OpenSSL Installer for Windows](https://slproweb.com/products/Win32OpenSSL.html). We developed on Windows 7 by using Visual Studio 2013 as IDE and the Microsoft Visual C++ Compiler 18.00.21005.1 for x86 platform. The installation instructions are for Visual Studio 2013 and Windows. 
+To get this project running you need [Poco C++ Libraries 1.4.7](http://pocoproject.org/) and [OpenSSL](https://www.openssl.org/). We developed on Windows 7 by using Visual Studio 2013 as IDE and the Microsoft Visual C++ Compiler 18.00.21005.1 for x86 platform. The installation instructions are for Visual Studio 2013 and Windows. 
 
 It is necessary to add new system environment variables. So do not close the window, if you have opened it during the installation process.
 
