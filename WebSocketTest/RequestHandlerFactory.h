@@ -33,8 +33,24 @@ public:
 			WebSocket ws(request, response);
 			cout << "WebSocket connection established.";
 			char buffer[1024];
-			int flags;
+			int flags = WebSocket::FRAME_TEXT;
 			int n;
+
+			/* Protocol (based on JSON object)
+			* {
+			* 	 to: 'test',
+			* 	 cmd: 'echo',
+			*   params: {
+			*	     toUpper: true
+			*	 },
+			*	 data: 'testdata'
+			* }
+			*/
+			std::string msg = "{\"cmd\":\"echo\", \"to\":\"cpp\", \"params\":{ \"toUpper\":\"true\"}, \"data\":\"testdata\"}";
+
+			n = ws.sendFrame(msg.data(), msg.size(), flags);
+			cout << Poco::format("Frame sent (length=%d, flags=0x%x).", n, unsigned(flags));
+
 			do
 			{
 				n = ws.receiveFrame(buffer, sizeof(buffer), flags);
