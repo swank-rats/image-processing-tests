@@ -26,7 +26,7 @@ private:
 
 	bool GetFrame(std::string& frame, char delimiter);
 	bool SendFrame(const std::string& frame);
-	bool GetBytes(char bytes[], int bytesToRead);
+	bool GetBytes(int bytesToRead);
 	int FindLength();
 	void MoveToStreamStart();
 };

@@ -47,11 +47,10 @@ void StreamLatencyMeasurementTest::runTask()
 
 			MoveToStreamStart();
 
-			char* buff = new char[size];
 			sw.stop();
 			timeBetween = sw.elapsed() * 0.001;
 			sw.start();
-			GetBytes(buff, size);
+			GetBytes(size);
 			sw.stop();
 			cout << "transport of " << size << " bytes: " << std::setw(8) << sw.elapsed() * 0.001 << " ms; time between: " << std::setw(7) << timeBetween << " ms\r";
 		}
@@ -99,11 +98,15 @@ int StreamLatencyMeasurementTest::FindLength() {
 	return size;
 }
 
-bool StreamLatencyMeasurementTest::GetBytes(char bytes[], int bytesToRead) {
-	int tmp = 0;
+bool StreamLatencyMeasurementTest::GetBytes(int bytesToRead) {
+	char* buff = new char[bytesToRead];
+	int receivedBytes = 0;
+	int temp;
 	try {
-		while (bytesToRead > tmp) {
-			tmp += socket.receiveBytes(bytes + tmp, bytesToRead - tmp);
+		while (bytesToRead > receivedBytes) {
+			temp = socket.receiveBytes(buff + receivedBytes, bytesToRead - receivedBytes);
+			if (temp == 0) std::cout << "empty frame!" << std::endl;
+			receivedBytes += temp;
 		}
 	}
 	catch (Exception error) {
