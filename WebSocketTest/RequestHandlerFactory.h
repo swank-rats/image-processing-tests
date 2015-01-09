@@ -35,6 +35,7 @@ public:
 			char buffer[1024];
 			int flags = WebSocket::FRAME_TEXT;
 			int n;
+			bool initReceived = false;
 
 			/* Protocol (based on JSON object)
 			* {
@@ -46,21 +47,24 @@ public:
 			*	 data: 'testdata'
 			* }
 			*/
-			std::string msg = "{\"cmd\":\"echo\", \"to\":\"cpp\", \"params\":{ \"toUpper\":\"true\"}, \"data\":\"testdata\"}";
-
-			n = ws.sendFrame(msg.data(), msg.size(), flags);
-			cout << Poco::format("Frame sent (length=%d, flags=0x%x).", n, unsigned(flags));
+			//std::string msg = "{\"cmd\":\"echo\", \"to\":\"cpp\", \"params\":{ \"toUpper\":\"true\"}, \"data\":\"testdata\"}";
 
 			do
 			{
 				n = ws.receiveFrame(buffer, sizeof(buffer), flags);
-				cout << Poco::format("Frame received (length=%d, flags=0x%x).", n, unsigned(flags));
+				cout << Poco::format("Frame received (length=%d, flags=0x%x).", n, unsigned(flags)) << endl;
 
 				std::string msg = std::string(buffer, n);
 
 				cout << msg << endl;
 
-				ws.sendFrame(buffer, n, flags);
+				if (!initReceived) {
+					std::string msg = "{\"cmd\":\"start\"}";
+
+					n = ws.sendFrame(msg.data(), msg.size(), flags);
+					cout << msg << endl;
+					cout << Poco::format("Frame sent (length=%d, flags=0x%x).", n, unsigned(flags)) << endl;
+				}
 			} while (n > 0 || (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
 
 			cout << "WebSocket connection closed.";
@@ -91,8 +95,8 @@ class RequestHandlerFactory : public HTTPRequestHandlerFactory
 public:
 	HTTPRequestHandler* createRequestHandler(const HTTPServerRequest& request)
 	{
-		cout << "Request from " << request.clientAddress().toString() << ": " << request.getMethod() 
-			<< " " << request.getURI() << " "<< request.getVersion();
+		cout << "Request from " << request.clientAddress().toString() << ": " << request.getMethod()
+			<< " " << request.getURI() << " " << request.getVersion();
 
 		for (HTTPServerRequest::ConstIterator it = request.begin(); it != request.end(); ++it)
 		{
@@ -102,4 +106,3 @@ public:
 		return new WebSocketRequestHandler;
 	}
 };
-
