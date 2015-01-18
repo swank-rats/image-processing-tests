@@ -14,7 +14,7 @@
     <ProjectGuid>{CD919B87-C3E5-4C43-875C-FDF9FB1EB655}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>WebSocketTest</RootNamespace>
-    <ProjectName>WebSocketInitStartTest</ProjectName>
+    <ProjectName>WebSocketTest</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -92,7 +92,7 @@ xcopy *.properties $(TargetDir) /y</Command>
   <ItemGroup>
     <None Include="any.pem" />
     <None Include="rootcert.pem" />
-    <None Include="WebSocketInitStartTest.properties">
+    <None Include="WebSocketTest.properties">
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>

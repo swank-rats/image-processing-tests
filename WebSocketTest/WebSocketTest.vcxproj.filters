@@ -27,6 +27,6 @@
   <ItemGroup>
     <None Include="rootcert.pem" />
     <None Include="any.pem" />
-    <None Include="WebSocketInitStartTest.properties" />
+    <None Include="WebSocketTest.properties" />
   </ItemGroup>
 </Project>
