@@ -36,6 +36,9 @@ public:
 			int flags = WebSocket::FRAME_TEXT;
 			int n;
 			bool initReceived = false;
+			int msgCtr = 0;
+			int maxMsgCtr = 10;
+			std::string msg = "{\"cmd\":\"invalid\"}";
 
 			/* Protocol (based on JSON object)
 			* {
@@ -51,22 +54,22 @@ public:
 
 			do
 			{
-				n = ws.receiveFrame(buffer, sizeof(buffer), flags);
-				cout << Poco::format("Frame received (length=%d, flags=0x%x).", n, unsigned(flags)) << endl;
-
-				std::string msg = std::string(buffer, n);
-
-				cout << msg << endl;
-
 				if (!initReceived) {
-					std::string msg = "{\"cmd\":\"start\"}";
+					n = ws.receiveFrame(buffer, sizeof(buffer), flags);
+					cout << Poco::format("Frame received (length=%d, flags=0x%x).", n, unsigned(flags)) << endl;
 
+					std::string msg = std::string(buffer, n);
+
+					cout << msg << endl;
+					initReceived = true;
+				}
+				else {
 					n = ws.sendFrame(msg.data(), msg.size(), flags);
 					cout << msg << endl;
 					cout << Poco::format("Frame sent (length=%d, flags=0x%x).", n, unsigned(flags)) << endl;
-					initReceived = true;
+					++msgCtr;
 				}
-			} while (n > 0 || (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
+			} while (n > 0 && msgCtr != maxMsgCtr && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE);
 
 			cout << "WebSocket connection closed.";
 		}

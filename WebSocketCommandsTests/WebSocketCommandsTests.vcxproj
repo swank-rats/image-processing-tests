@@ -11,10 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CD919B87-C3E5-4C43-875C-FDF9FB1EB655}</ProjectGuid>
+    <ProjectGuid>{92D1D510-CBAA-4AA9-AD8C-BFF0FFC555B7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>WebSocketTest</RootNamespace>
-    <ProjectName>WebSocketInitStartTest</ProjectName>
+    <RootNamespace>WebSocketCommandsTests</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -58,13 +57,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>PocoCryptod.lib;PocoFoundationd.lib;PocoNetd.lib;PocoNetSSLd.lib;PocoUtild.lib;PocoXMLd.lib;PocoJSONd.lib;libeay32MDd.lib;ssleay32MDd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(POCO)\lib;$(OPENSSL)\lib\VC;</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy *.pem $(TargetDir) /y
-xcopy *.properties $(TargetDir) /y</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -84,17 +78,15 @@ xcopy *.properties $(TargetDir) /y</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="any.pem" />
+    <None Include="rootcert.pem" />
+    <None Include="WebSocketCommandsTests.properties" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RequestHandlerFactory.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="any.pem" />
-    <None Include="rootcert.pem" />
-    <None Include="WebSocketInitStartTest.properties">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

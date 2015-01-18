@@ -15,6 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="any.pem" />
+    <None Include="rootcert.pem" />
+    <None Include="WebSocketCommandsTests.properties" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -23,10 +28,5 @@
     <ClInclude Include="RequestHandlerFactory.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="rootcert.pem" />
-    <None Include="any.pem" />
-    <None Include="WebSocketInitStartTest.properties" />
   </ItemGroup>
 </Project>
