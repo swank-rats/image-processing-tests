@@ -61,7 +61,7 @@ protected:
 	int main(const std::vector<std::string>& args)
 	{
 		try {
-			unsigned short port = (unsigned short)config().getInt("WebSocketTest.port", 3002);
+			unsigned short port = (unsigned short)config().getInt("WebSocketTest.port", 3001);
 
 			// set-up a server socket
 			SecureServerSocket svs(port);
