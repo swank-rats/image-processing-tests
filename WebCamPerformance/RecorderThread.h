@@ -38,6 +38,7 @@ public:
 		//Possible resolutions : 1280x720, 640x480; 440x330
 		capture.set(CV_CAP_PROP_FRAME_WIDTH, 640);
 		capture.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
+		cvNamedWindow("test", CV_WINDOW_AUTOSIZE);
 
 		while (1) {
 			if (!capture.isOpened()) {
@@ -52,10 +53,11 @@ public:
 			if (!frame.empty()) {
 				//Clone image
 				lastImage = frame;
+				cv::imshow("test", frame);
 			}
 
 			sw.stop();
-			printf("ms: %f\r", sw.elapsed() * 0.001);
+			printf("Capture frame: %f ms\n", sw.elapsed() * 0.001);
 
 			if (waitKey(1) == 27)
 				exit(0);

@@ -71,7 +71,7 @@ void RecorderActivity::recording() {
 		}
 
 		sw.stop();
-		printf("Capture frame: %f ms\r", sw.elapsed() * 0.001);
+		printf("Capture frame: %f ms\n", sw.elapsed() * 0.001);
 
 		if (waitKey(1) == 27)
 			exit(0);
