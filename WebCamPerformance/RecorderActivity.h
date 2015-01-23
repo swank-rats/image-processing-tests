@@ -1,25 +1,30 @@
 #include <opencv2\core\core.hpp>
 #include <opencv2\highgui\highgui.hpp>
 #include <opencv2\opencv.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv/cv.h>
+#include <sys/timeb.h>
+
 #include <Poco\Thread.h>
 #include <Poco\Activity.h>
 #include <Poco\Logger.h>
 #include <Poco\RWLock.h>
 #include <Poco\Stopwatch.h>
-
 #include <memory>
 
 using std::cout;
+using namespace cv;
 
 using cv::VideoCapture;
 using cv::Mat;
 using Poco::Activity;
+using Poco::Thread;
 using Poco::Logger;
 using Poco::Stopwatch;
 
-class Recorder {
+class RecorderActivity {
 public:
-	Recorder();
+	RecorderActivity();
 
 	void start();
 private:
@@ -27,30 +32,31 @@ private:
 
 	Mat lastImage;
 	VideoCapture capture;
-	Activity<Recorder> recordingActivity;
+	Activity<RecorderActivity> recordingActivity;
 };
 
-Recorder::Recorder() : recordingActivity(this, &Recorder::recording) {
-	capture.open(CV_CAP_ANY);
-	//camera settings
-	capture.set(CV_CAP_PROP_FPS, 30);
-	//Possible resolutions : 1280x720, 640x480; 440x330
-	capture.set(CV_CAP_PROP_FRAME_WIDTH, 640);
-	capture.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
+RecorderActivity::RecorderActivity() : recordingActivity(this, &RecorderActivity::recording) {
 }
 
-void Recorder::start() {
+void RecorderActivity::start() {
 	recordingActivity.start();
 }
 
-void Recorder::recording() {
-	Logger& logger = Logger::get("WebcamService");
+void RecorderActivity::recording() {
 	Stopwatch sw;
 	cv::Mat frame;
+	int fps = 15;
+	int sleep = 6000 / fps;
+
+	capture.open(CV_CAP_ANY);
+	//camera settings
+	capture.set(CV_CAP_PROP_FPS, fps);
+	//Possible resolutions : 1280x720, 640x480; 440x330
+	capture.set(CV_CAP_PROP_FRAME_WIDTH, 640);
+	capture.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
 
 	while (!recordingActivity.isStopped()) {
 		if (!capture.isOpened()) {
-			logger.error("Lost connection to webcam!");
 			break;
 		}
 
@@ -63,11 +69,13 @@ void Recorder::recording() {
 			//Clone image
 			lastImage = frame;
 		}
-		else {
-			logger.warning("Captured empty webcam frame!");
-		}
 
 		sw.stop();
-		cout << sw.elapsed() * 0.001 << " ms\n\r";
+		printf("Capture frame: %f ms\r", sw.elapsed() * 0.001);
+
+		if (waitKey(1) == 27)
+			exit(0);
+
+		Thread::sleep(sleep);
 	}
 }

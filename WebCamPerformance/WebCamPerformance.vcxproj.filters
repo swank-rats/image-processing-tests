@@ -20,7 +20,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Recorder.h">
+    <ClInclude Include="RecorderActivity.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="RecorderThread.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="RecorderTwoThreads.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

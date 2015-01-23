@@ -7,9 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebSocketTest", "WebSocketT
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MJPEGPerformanceTest", "MJPEGPerformanceTest\MJPEGPerformanceTest.vcxproj", "{7F0EAAC5-4E49-4696-9F03-DB958F66B394}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebCamFPSPerformance", "WebCamFPSPerformance\WebCamFPSPerformance.vcxproj", "{D2945F8F-C8A0-4E70-B010-FB8FFC853603}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebCamPerformance", "WebCamPerformance\WebCamPerformance.vcxproj", "{96BBD9AE-E457-49C5-9C7C-69E1141656B6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebCamThreadPerformance", "WebCamPerformance\WebCamPerformance.vcxproj", "{96BBD9AE-E457-49C5-9C7C-69E1141656B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{7F0EAAC5-4E49-4696-9F03-DB958F66B394}.Debug|Win32.Build.0 = Debug|Win32
 		{7F0EAAC5-4E49-4696-9F03-DB958F66B394}.Release|Win32.ActiveCfg = Release|Win32
 		{7F0EAAC5-4E49-4696-9F03-DB958F66B394}.Release|Win32.Build.0 = Release|Win32
-		{D2945F8F-C8A0-4E70-B010-FB8FFC853603}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D2945F8F-C8A0-4E70-B010-FB8FFC853603}.Debug|Win32.Build.0 = Debug|Win32
-		{D2945F8F-C8A0-4E70-B010-FB8FFC853603}.Release|Win32.ActiveCfg = Release|Win32
-		{D2945F8F-C8A0-4E70-B010-FB8FFC853603}.Release|Win32.Build.0 = Release|Win32
 		{96BBD9AE-E457-49C5-9C7C-69E1141656B6}.Debug|Win32.ActiveCfg = Debug|Win32
 		{96BBD9AE-E457-49C5-9C7C-69E1141656B6}.Debug|Win32.Build.0 = Debug|Win32
 		{96BBD9AE-E457-49C5-9C7C-69E1141656B6}.Release|Win32.ActiveCfg = Release|Win32

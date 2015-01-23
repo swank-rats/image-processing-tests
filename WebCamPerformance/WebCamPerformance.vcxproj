@@ -14,12 +14,15 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Recorder.h" />
+    <ClInclude Include="RecorderTwoThreads.h" />
+    <ClInclude Include="RecorderActivity.h" />
+    <ClInclude Include="RecorderThread.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{96BBD9AE-E457-49C5-9C7C-69E1141656B6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>WebCamPerformance</RootNamespace>
+    <ProjectName>WebCamThreadPerformance</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

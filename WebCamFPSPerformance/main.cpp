@@ -46,19 +46,23 @@ void process(Mat& frame)
 {
 	Sleep(3);
 }
+
 int main(int argc, char** argv)
 {
 	int frameno = 0;
 	cv::Mat frame;
-	cv::VideoCapture cap(0);
+	cv::VideoCapture cap;
+	cap.open(CV_CAP_ANY);
 
 	for (;;)
 	{
-		//cap>>frame;
 		double start = CLOCK();
+		cap >> frame;
+
 		process(frame);
+
 		double dur = CLOCK() - start;
-		printf("avg time per frame %f ms. frameno = %d\n", avgdur(dur), frameno++);
+		printf("time this frame: %f ms. avg time per frame %f ms. frameno = %d\r", dur, avgdur(dur), frameno++);
 
 		if (waitKey(1) == 27)
 			exit(0);
