@@ -77,7 +77,7 @@ void StreamLatencyMeasurementTest::runTask()
 		Stopwatch sw;
 
 		sw.start();
-		while (sw.elapsedSeconds() < 60) {
+		while (sw.elapsedSeconds() < 2) {
 			double start = CLOCK();
 
 			int size = FindLength();
@@ -92,11 +92,11 @@ void StreamLatencyMeasurementTest::runTask()
 			data += size;
 
 			double dur = CLOCK() - start;
-			printf("frame: %04.2f ms; avg/frame %04.2f ms; frame#: %04u; bytes: %08u\r", dur, avgdur(dur), frameno++, data);
+			printf("frame: %05.2f ms; avg/frame %04.2f ms; frame#: %04u; bytes: %08u\r", dur, avgdur(dur), frameno++, data);
 		}
 
 		printf("\n\r##################################\n\r");
-		printf("time: %u sec; avg/frame %.2f ms; frames: %4u; data: %.2f mb\r", sw.elapsedSeconds(), _avgdur, --frameno, ((double)data / 1024 / 1014));
+		printf("time: %u sec; avg/frame %.2f ms; frames: %4u; data: %d mb\r", sw.elapsedSeconds(), _avgdur, --frameno, data >> 20);
 
 		socket.close();
 	}
