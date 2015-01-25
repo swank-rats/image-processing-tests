@@ -4,7 +4,6 @@
 #include <Poco\Stopwatch.h>
 #include <Poco\Stopwatch.h>
 
-
 #include "StreamLatencyMeasurementTest.h"
 
 using std::cerr;
@@ -19,6 +18,44 @@ string length = "Length";
 string jpeg = "jpeg\r\n";
 string lineend = "\r\n";
 
+#if defined(_MSC_VER) || defined(WIN32)  || defined(_WIN32) || defined(__WIN32__) \
+	|| defined(WIN64) || defined(_WIN64) || defined(__WIN64__)
+
+#include <windows.h>
+bool _qpcInited = false;
+double PCFreq = 0.0;
+__int64 CounterStart = 0;
+void InitCounter()
+{
+	LARGE_INTEGER li;
+	if (!QueryPerformanceFrequency(&li))
+	{
+		std::cout << "QueryPerformanceFrequency failed!\n";
+	}
+	PCFreq = double(li.QuadPart) / 1000.0f;
+	_qpcInited = true;
+}
+double CLOCK()
+{
+	if (!_qpcInited) InitCounter();
+	LARGE_INTEGER li;
+	QueryPerformanceCounter(&li);
+	return double(li.QuadPart) / PCFreq;
+}
+
+#endif
+
+double _avgdur = 0;
+double _fpsstart = 0;
+double _avgfps = 0;
+double _fps1sec = 0;
+
+double avgdur(double newdur)
+{
+	_avgdur = 0.98*_avgdur + 0.02*newdur;
+	return _avgdur;
+}
+
 StreamLatencyMeasurementTest::StreamLatencyMeasurementTest(URI uri)
 	: uri(uri), Task("StreamLatencyMeasurementTest"), socketAddr(uri.getHost(), uri.getPort()), socket(), stream(socket)
 {
@@ -26,19 +63,23 @@ StreamLatencyMeasurementTest::StreamLatencyMeasurementTest(URI uri)
 
 void StreamLatencyMeasurementTest::runTask()
 {
-
 	try {
 		socket.connect(socketAddr);
 
-		string request = "GET /videostream HTTP/1.1\r\nHost: 127.0.0.1:4711\r\nConnection: keep - alive\r\nAccept : image / webp, */*;q=0.8\r\n\r\n";
+		string request = "GET /videostream HTTP/1.1\r\nHost: 192.168.0.15:4711\r\nConnection: keep - alive\r\nAccept : image / webp, */*;q=0.8\r\n\r\n";
 
 		SendFrame(request);
 
+		double start = 0.0;
+		double end = 0.0;
+		long frameno = 0;
+		long data = 0;
 		Stopwatch sw;
-		double timeBetween;
 
-		while (!isCancelled()) {
-			sw.restart();
+		sw.start();
+		while (sw.elapsedSeconds() <= 10) {
+			double start = CLOCK();
+
 			int size = FindLength();
 			if (size == -1) {
 				cerr << endl << "could not find length" << endl;
@@ -47,13 +88,14 @@ void StreamLatencyMeasurementTest::runTask()
 
 			MoveToStreamStart();
 
-			sw.stop();
-			timeBetween = sw.elapsed() * 0.001;
-			sw.start();
 			GetBytes(size);
-			sw.stop();
-			cout << "transport of " << size << " bytes: " << std::setw(8) << sw.elapsed() * 0.001 << " ms; time between: " << std::setw(7) << timeBetween << " ms\r";
+			data += size;
+
+			double dur = CLOCK() - start;
+			printf("frame: %f ms; avg per frame %f ms; frameno: %u; data: %u\r", dur, avgdur(dur), frameno++, data);
 		}
+
+		socket.close();
 	}
 	catch (Exception& e) {
 		cerr << endl;
@@ -115,7 +157,6 @@ bool StreamLatencyMeasurementTest::GetBytes(int bytesToRead) {
 	}
 	return true;
 }
-
 
 bool StreamLatencyMeasurementTest::GetFrame(std::string& frame, char delimiter) {
 	char c;

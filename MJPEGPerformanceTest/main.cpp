@@ -55,8 +55,7 @@ protected:
 		TaskManager tm;
 
 		try {
-
-			StreamLatencyMeasurementTest* slm = new StreamLatencyMeasurementTest(URI("http://127.0.0.1:4711/videostream"));
+			StreamLatencyMeasurementTest* slm = new StreamLatencyMeasurementTest(URI("http://192.168.0.15:4711/videostream"));
 			tm.start(slm);
 		}
 		catch (Exception& e) {
