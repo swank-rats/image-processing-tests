@@ -77,7 +77,7 @@ void StreamLatencyMeasurementTest::runTask()
 		Stopwatch sw;
 
 		sw.start();
-		while (sw.elapsedSeconds() < 2) {
+		while (sw.elapsedSeconds() < 60) {
 			double start = CLOCK();
 
 			int size = FindLength();
@@ -92,7 +92,7 @@ void StreamLatencyMeasurementTest::runTask()
 			data += size;
 
 			double dur = CLOCK() - start;
-			printf("frame: %05.2f ms; avg/frame %04.2f ms; frame#: %04u; bytes: %08u\r", dur, avgdur(dur), frameno++, data);
+			printf("frame: %06.2f ms; avg/frame %06.2f ms; frame#: %04u; bytes: %08u\r", dur, avgdur(dur), frameno++, data);
 		}
 
 		printf("\n\r##################################\n\r");
