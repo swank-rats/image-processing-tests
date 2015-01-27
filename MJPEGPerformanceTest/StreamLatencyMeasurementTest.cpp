@@ -66,7 +66,7 @@ void StreamLatencyMeasurementTest::runTask()
 	try {
 		socket.connect(socketAddr);
 
-		string request = "GET /videostream HTTP/1.1\r\nHost: 192.168.0.15:4711\r\nConnection: keep - alive\r\nAccept : image / webp, */*;q=0.8\r\n\r\n";
+		string request = "GET /videostream HTTP/1.1\r\nHost: 127.0.0.1:4711\r\nConnection: keep - alive\r\nAccept : image / webp, */*;q=0.8\r\n\r\n";
 
 		SendFrame(request);
 

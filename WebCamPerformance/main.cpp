@@ -5,6 +5,7 @@
 #include <opencv2\core\core.hpp>
 #include <opencv2\highgui\highgui.hpp>
 #include <opencv2\opencv.hpp>
+#include "opencv2/core/gpumat.hpp"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv/cv.h>
 #include <sys/timeb.h>
@@ -18,6 +19,7 @@
 
 using std::cout;
 using namespace cv;
+using namespace cv::gpu;
 
 using cv::VideoCapture;
 using cv::Mat;
@@ -78,8 +80,9 @@ int main(int argc, char** argv) {
 	RecorderThread rec;
 	Poco::ThreadPool::defaultPool().start(rec);
 	Poco::ThreadPool::defaultPool().joinAll();
+	cv::gpu::GpuMat x, y;
 
-	//Run POCO threads processing and capturing
+//Run POCO threads processing and capturing
 	//RecorderTwoThreads rec;
 	//rec.start();
 	//while (1);
